@@ -1,10 +1,50 @@
+## Liberando o acesso ao banco
+
+> sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+Procure pela linha abaixo e altere para a faixa de IP
+
+> bind-address = 0.0.0.0
+
+## Conectando ao banco (linux local)
+
+>  sudo mysql -u root -p
+
+Esse comando vai te pedir a senha de root. Se você não configurou uma senha na instalação, deixe o campo em branco e pressione Enter.
+
+## Visualize seus bancos 
+
+> SHOW DATABASES;
+
+## Selecionando um banco de dados
+
+> USE nomeBanco
+
 ## Criando um banco de dados
 
 > CREATE DATABASE nomeBanco;
 
 ## Backup do banco de dados
 
-> BACKUP DATABASE nomeBanco TO DISK = 'Caminho a ser salvo'; 
+> BACKUP DATABASE nomeBanco TO DISK = 'Caminho a ser salvo';
+
+## Criando um usuario
+
+> CREATE USER 'developer'@'%' IDENTIFIED BY 'sua_senha';
+
+'developer'@'localhost': Isso cria o usuário developer e restringe o acesso apenas ao seu próprio computador (localhost). Se você quiser que o usuário acesse o banco de dados remotamente, substitua localhost por %, o que permite acesso de qualquer IP.
+
+## Conceder permissões ao usuario
+
+> GRANT ALL PRIVILEGES ON nome_do_banco.* TO 'developer'@'%' IDENTIFIED BY 'sua_senha';
+
+Para dar permissões completas a esse usuário em um banco de dados específico.
+
+## Recarregue as configuracoes e teste a conexão
+
+> FLUSH PRIVILEGES;
+
+> mysql -u developer -p
 
 ## Criando uma tabela
 
